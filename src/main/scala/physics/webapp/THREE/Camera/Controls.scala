@@ -14,33 +14,34 @@ class OrbitControls(`_object`: Camera, _domElement: HTMLElement = js.native) ext
   var `object`: Camera = `_object`
 
   var autoRotate: Boolean = js.native
-  var autoRotateSpeed: Float = js.native
-  var dampingFactor: Float = js.native
+  var autoRotateSpeed: Double = js.native
+  var dampingFactor: Double = js.native
   var enabled : Boolean = js.native
   var enableDamping: Boolean = js.native
   var enableKeys : Boolean = js.native
   var enablePan : Boolean = js.native
   var enableRotate : Boolean = js.native
   var enableZoom : Boolean = js.native
-  var keyPanSpeed : Float = js.native
+  var keyPanSpeed : Double = js.native
   var keys : Object = js.native
-  var maxAzimuthAngle : Float = js.native
-  var maxDistance : Float = js.native
-  var maxPolarAngle : Float = js.native
-  var maxZoom : Float = js.native
-  var minAzimuthAngle : Float = js.native
-  var minDistance : Float = js.native
-  var minPolarAngle : Float = js.native
-  var minZoom : Float = js.native
+  var maxAzimuthAngle : Double = js.native
+  var maxDistance : Double = js.native
+  var maxPolarAngle : Double = js.native
+  var maxZoom : Double = js.native
+  var minAzimuthAngle : Double = js.native
+  var minDistance : Double = js.native
+  var minPolarAngle : Double = js.native
+  var minZoom : Double = js.native
   var mouseButtons : Object = js.native
-  var panSpeed : Float = js.native
+  var panSpeed : Double = js.native
   var position0 : Vector3 = js.native
-  var rotateSpeed : Float = js.native
+  var rotateSpeed : Double = js.native
   var screenSpacePanning : Boolean = js.native
   var target0 : Vector3 = js.native
   var target : Vector3 = js.native
-  var zoom0 : Float = js.native
-  var zoomSpeed : Float = js.native
+  var zoom0 : Double = js.native
+  var zoomSpeed : Double = js.native
+
 
   def dispose () : Unit = js.native
   def getAzimuthalAngle () : Radians = js.native
@@ -49,3 +50,26 @@ class OrbitControls(`_object`: Camera, _domElement: HTMLElement = js.native) ext
   def saveState () : Unit = js.native
   def update(): Unit = js.native
 }
+
+@js.native
+@JSGlobal("THREE.TrackballControls")
+class TrackballControls(`_object`: Camera, _domElement: HTMLElement = js.native) extends js.Object {
+  var domElement: HTMLElement = _domElement
+  var `object`: Camera = `_object`
+
+  var rotateSpeed: Double = js.native
+  var zoomSpeed: Double = js.native
+  var panSpeed: Double = js.native
+  var noRotate: Boolean = js.native
+  var noZoom: Boolean = js.native
+  var noPan: Boolean = js.native
+  var staticMoving: Boolean = js.native
+  var dynamicDampingFactor: Double = js.native
+  var minDistance: Double = js.native
+  var maxDistance: Double = js.native
+
+  def update(): Unit = js.native
+
+}
+
+

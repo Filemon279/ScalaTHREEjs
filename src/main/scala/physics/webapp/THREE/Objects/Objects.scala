@@ -1,5 +1,7 @@
 package physics.webapp.THREE.Objects
 
+import physics.webapp.THREE.Geometryimport.Geometry.Geometry
+import physics.webapp.THREE.Materials.Material
 import physics.webapp.THREE.Math.Vector3
 import physics.webapp.THREE.THREE._
 
@@ -11,6 +13,20 @@ trait WebGLRenderTarget extends js.Object
 
 @JSName("THREE.Color")
 class Color(r : String, g : Float = js.native, b : Float =  js.native) extends js.Object
+
+@JSName("THREE.Line")
+class Line(var geometry : Geometry, var material : Material) extends Object3D {
+
+ var isLine : Boolean = js.native
+
+ def computeLineDistances () : Line = js.native
+ def raycast[T] ( raycaster : Raycaster, intersects : Array[T] ) : Unit = js.native
+ override def clone () : Line = js.native
+
+}
+
+
+
 
 @js.native
 @JSGlobal("THREE.Object3D")

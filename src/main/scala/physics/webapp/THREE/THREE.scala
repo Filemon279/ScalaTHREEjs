@@ -1,5 +1,7 @@
 package physics.webapp.THREE
 
+import physics.webapp.THREE.Camera.Camera
+import physics.webapp.THREE.Math.{Vector2, Vector3}
 import physics.webapp.THREE.Objects.WebGLRenderer
 
 import scala.scalajs.js
@@ -19,11 +21,14 @@ object THREE {
 
   @js.native
   @JSGlobal("THREE.Raycaster")
-  class Raycaster() extends js.Object
+  class Raycaster( origin : Vector3, direction : Vector3, near: Double = js.native , far: Double = js.native ) extends js.Object{
+
+    def setFromCamera ( coords : Vector2, camera : Camera ) : Unit = js.native
+  }
 
   @js.native
   @JSGlobal("THREE.Quaternion")
-  class Quaternion(var x: Float, var y: Float, var z: Float, var w: Float) extends js.Object
+  class Quaternion(var x: Double, var y: Double, var z: Double, var w: Double) extends js.Object
 
   @js.native
   @JSGlobal("THREE.radians")

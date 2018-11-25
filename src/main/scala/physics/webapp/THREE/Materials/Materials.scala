@@ -12,6 +12,9 @@ class MeshBasicMaterial(parameters: js.Dynamic) extends Material
 @JSGlobal("THREE.MeshStandardMaterial")
 class MeshStandardMaterial(parameters: js.Dynamic) extends Material
 
+@JSGlobal("THREE.LineBasicMaterial")
+class LineBasicMaterial(parameters: js.Dynamic) extends Material
+
 
 //////////////////////////
 //    Side

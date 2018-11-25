@@ -1,9 +1,11 @@
 package physics.webapp.THREE.Lights
 
+import physics.webapp.THREE.Objects.Object3D
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSGlobal
 
-abstract class Light extends js.Object {
+abstract class Light extends Object3D {
   def color: Integer = js.native
   def intensity: Float = js.native
   def isLight: Boolean = js.native
