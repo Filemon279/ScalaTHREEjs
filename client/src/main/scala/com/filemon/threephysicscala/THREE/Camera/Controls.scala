@@ -1,5 +1,6 @@
 package physics.webapp.THREE.Camera
 
+import org.scalajs.dom.Node
 import org.scalajs.dom.raw.HTMLElement
 import physics.webapp.THREE.Math.Vector3
 import physics.webapp.THREE.THREE.Radians
@@ -50,7 +51,7 @@ class OrbitControls(var `object`: Camera, var _domElement: HTMLElement = js.nati
 
 @js.native
 @JSGlobal("THREE.TrackballControls")
-class TrackballControls(var `object`: Camera, var domElement: HTMLElement = js.native) extends js.Object {
+class TrackballControls(var `object`: Camera, var domElement: Node = js.native) extends js.Object {
 
   var rotateSpeed: Double = js.native
   var zoomSpeed: Double = js.native

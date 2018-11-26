@@ -7,6 +7,7 @@ trait Constants {
   val earthRadius = 6371.008 //km
 
   val sunMass = 5000//1.98855 * Math.pow(10,30) // kg
+  val smallSunMall = 5000/2//1.98855 * Math.pow(10,30) // kg
   val sunRadius = 696342 //km
 
 
