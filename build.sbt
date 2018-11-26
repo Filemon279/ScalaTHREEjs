@@ -1,15 +1,41 @@
+import sbtcrossproject.{crossProject, CrossType}
 
-enablePlugins(ScalaJSPlugin)
+lazy val server = (project in file("server")).settings(commonSettings).settings(
+  scalaJSProjects := Seq(client),
+  pipelineStages in Assets := Seq(scalaJSPipeline),
+  pipelineStages := Seq(digest, gzip),
+  // triggers scalaJSPipeline when using compile or continuous compilation
+  compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
+  libraryDependencies ++= Seq(
+    "com.vmunier" %% "scalajs-scripts" % "1.1.2",
+    guice,
+    specs2 % Test
+  ),
+  // Compile the project before generating Eclipse files, so that generated .scala or .class files for views and routes are present
+  EclipseKeys.preTasks := Seq(compile in Compile)
+).enablePlugins(PlayScala).
+  dependsOn(sharedJvm)
 
-name := "scala-physics-model"
+lazy val client = (project in file("client")).settings(commonSettings).settings(
+  scalaJSUseMainModuleInitializer := true,
+  libraryDependencies ++= Seq(
+    "org.scala-js" %%% "scalajs-dom" % "0.9.6",
+    "org.webjars.bower" % "jquery" % "3.3.1"
+  )
+).enablePlugins(ScalaJSPlugin, ScalaJSWeb).
+  dependsOn(sharedJs)
 
-version := "0.1"
+lazy val shared = crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("shared"))
+  .settings(commonSettings)
+lazy val sharedJvm = shared.jvm
+lazy val sharedJs = shared.js
 
-scalaVersion := "2.12.6"
+lazy val commonSettings = Seq(
+  scalaVersion := "2.12.5",
+  organization := "com.filemon"
+)
 
-libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.6"
-libraryDependencies += "org.querki" %%% "jquery-facade" % "1.2"
-
-scalaJSUseMainModuleInitializer := true
-
-jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
+// loads the server project at sbt startup
+onLoad in Global := (onLoad in Global).value andThen {s: State => "project server" :: s}

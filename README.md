@@ -1,2 +1,1 @@
-# ScalaTHREEjs
-Three.js in scala with scala.js
+# three-physic-scala
