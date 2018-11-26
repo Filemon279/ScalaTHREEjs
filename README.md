@@ -1,11 +1,4 @@
 # ScalaTHREEjs
-
-Introducing THREE.js Physic liblary in Scala & Scala.js
-
-My goal is to implement Physic to THREE.js engine and wrap it all in Scala.
-
-Current progress:
-THREE.Camera# ScalaTHREEjs
 Introducing THREE.js Physic liblary in Scala & Scala.js
 
 My goal is to implement Physic to THREE.js engine and wrap it all in Scala.
