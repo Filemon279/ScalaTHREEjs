@@ -21,6 +21,8 @@ class Planet(geometry: Geometry, material: Material, _mass: Double, _radious: Do
   var mass = _mass
   var radious = _radious
   var velocity = new Vector3(0,0,0)
+  var lastPosition: Vector3 = new Vector3(0,0,0)
+  var force: Vector3 = new Vector3(0,0,0)
 
   def initialPosition(x: Double, y: Double, z:Double): Unit = {
     mesh.position.x = x
