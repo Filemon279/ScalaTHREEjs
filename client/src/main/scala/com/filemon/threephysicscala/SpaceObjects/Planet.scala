@@ -30,19 +30,42 @@ class Planet(geometry: Geometry, material: Material, _mass: Double, _radious: Do
     mesh.position.z = z
   }
 
-  def recalculatePosition(): Unit = {
+  def recalculateEulerPosition(): Unit = {
+    //applyForce()
     mesh.position.x = mesh.position.x + (velocity.x * deltaT)
     mesh.position.y = mesh.position.y + (velocity.y * deltaT)
     mesh.position.z = mesh.position.z + (velocity.z * deltaT)
-    //var text = "X: "+mesh.position.x+" Y: "+mesh.position.y+"| Z:"+mesh.position.z
-    //println(text)
+
   }
+
+
+  def recalculateVerletPosition(): Unit = {
+    lastPosition.x = mesh.position.x
+    lastPosition.y = mesh.position.y
+    lastPosition.z = mesh.position.z
+    mesh.position.x = 2 * mesh.position.x - lastPosition.x + ( (force.x/mass) * Math.pow(deltaT,2) )
+    mesh.position.y = 2 * mesh.position.y - lastPosition.y + ( (force.y/mass) * Math.pow(deltaT,2) )
+    mesh.position.z = 2 * mesh.position.z - lastPosition.z + ( (force.z/mass) * Math.pow(deltaT,2) )
+  }
+
+  def recalculateFirstEulerPosition(): Unit = {
+    lastPosition.x = mesh.position.x + (velocity.x * deltaT)
+    lastPosition.y = mesh.position.y + (velocity.y * deltaT)
+    lastPosition.z = mesh.position.z + (velocity.z * deltaT)
+  }
+
 
   def position(): Vector3 = {
     new Vector3(mesh.position.x, mesh.position.y, mesh.position.z)
   }
 
-  def applyForce(force: Vector3): Unit = {
-    velocity = Velocity.velocity(velocity, force)
+  def addForce(inForce: Vector3): Unit = {
+    force.x += inForce.x
+    force.y += inForce.y
+    force.z += inForce.z
+  }
+
+  def applyForce(inForce: Vector3 = force): Unit = {
+    velocity = Velocity.velocity(velocity, inForce)
   }
 }

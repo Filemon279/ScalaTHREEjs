@@ -36,7 +36,9 @@ object ScalaProject extends Constants with Planets with Background {
 
     val gui = new GUI(js.Dynamic.literal(resizable= false, width=300))
 
-    var obj = js.Dynamic.literal(Density=0, EarthMass=earthMass, SunLargeMass=sunMass, SunSmallMass=smallSunMall)
+    var verle: Int = 0
+
+    var obj = js.Dynamic.literal(Density=0, EarthMass=earthMass, SunLargeMass=sunMass, SunSmallMass=smallSunMall, Verle=0)
 
     var density: Double = 0
 
@@ -51,11 +53,13 @@ object ScalaProject extends Constants with Planets with Background {
     val onEarthMassChange: js.Any => js.Any = (arg: js.Any) => {earth.mass = arg.asInstanceOf[Double]}
     val onSunLargeMassChange: js.Any => js.Any = (arg: js.Any) => {sun.mass = arg.asInstanceOf[Double]}
     val onSunSmallMassChange: js.Any => js.Any = (arg: js.Any) => {sun2.mass = arg.asInstanceOf[Double]}
+    val onVerleChange: js.Any => js.Any = (arg: js.Any) => {verle = arg.asInstanceOf[Int]}
 
     gui.add(obj, "Density").min(0).max(20).step(0.1).onChange(onDensityChange)
     gui.add(obj, "EarthMass").min(0).max(earthMass*2).step(0.1).onChange(onEarthMassChange)
     gui.add(obj, "SunLargeMass").min(0).max(sunMass*2).step(0.1).onChange(onSunLargeMassChange)
     gui.add(obj, "SunSmallMass").min(0).max(smallSunMall*2).step(0.1).onChange(onSunSmallMassChange)
+    gui.add(obj, "Verle").min(0).max(1).step(1).onChange(onVerleChange)
 
 
     controls.rotateSpeed = 2.0
@@ -78,9 +82,13 @@ object ScalaProject extends Constants with Planets with Background {
 
     val lineMaterial = new LineBasicMaterial(js.Dynamic.literal(color=0xffffff ));
 
-
-
     earth.velocity = new Vector3(20, 0, 10)
+
+    earth.applyForce(Force.gravitationForce(sun, earth))
+    earth.applyForce(Force.gravitationForce(sun2, earth))
+    earth.applyForce(Force.dragSphereForce(earth, density))
+    earth.recalculateFirstEulerPosition()
+
 
     var geometry = new Geometry()
     var line = new Line( geometry, lineMaterial )
@@ -94,10 +102,15 @@ object ScalaProject extends Constants with Planets with Background {
       earth.mesh.rotation.y += .005
       controls.update()
       renderer.render(scene, camera)
-      earth.applyForce(Force.gravitationForce(sun, earth))
-      earth.applyForce(Force.gravitationForce(sun2, earth))
-      earth.applyForce(Force.dragSphereForce(earth, density))
-      earth.recalculatePosition()
+      earth.addForce(Force.gravitationForce(sun, earth))
+      earth.addForce(Force.gravitationForce(sun2, earth))
+      if (verle==1) earth.recalculateVerletPosition()
+      else {
+        earth.applyForce(Force.gravitationForce(sun, earth))
+        earth.applyForce(Force.gravitationForce(sun2, earth))
+        earth.applyForce(Force.dragSphereForce(earth, density))
+        earth.recalculateEulerPosition()
+      }
       addLine()
     }
 
