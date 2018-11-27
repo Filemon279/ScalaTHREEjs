@@ -1,11 +1,9 @@
-FROM ysihaoy/scala-play:2.12.2-2.6.0-sbt-0.13.15
-
-# copy code
-#&& sbt test:compile
-COPY . /root/app/
-WORKDIR /root/app
-RUN sbt compile 
-
+$ cat target/docker/Dockerfile
+FROM openjdk:latest
+WORKDIR /opt/docker
+ADD opt /opt
+RUN ["chown", "-R", "daemon:daemon", "."]
+USER daemon
 EXPOSE 9000
 CMD ["sbt run"]
 
