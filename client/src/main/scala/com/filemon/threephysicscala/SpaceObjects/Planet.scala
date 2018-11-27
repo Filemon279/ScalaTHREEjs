@@ -1,6 +1,6 @@
 package physics.webapp.SpaceObjects
 
-import physics.webapp.Physics.{Constants, Velocity}
+import physics.webapp.Physics.{Constants, DeltaT, Velocity}
 import physics.webapp.Physicsimport.Force
 import physics.webapp.THREE.Geometryimport.Geometry.{Geometry, Mesh}
 import physics.webapp.THREE.Materials.Material
@@ -32,9 +32,9 @@ class Planet(geometry: Geometry, material: Material, _mass: Double, _radious: Do
 
   def recalculateEulerPosition(): Unit = {
     //applyForce()
-    mesh.position.x = mesh.position.x + (velocity.x * deltaT)
-    mesh.position.y = mesh.position.y + (velocity.y * deltaT)
-    mesh.position.z = mesh.position.z + (velocity.z * deltaT)
+    mesh.position.x = mesh.position.x + (velocity.x * DeltaT.deltaT)
+    mesh.position.y = mesh.position.y + (velocity.y * DeltaT.deltaT)
+    mesh.position.z = mesh.position.z + (velocity.z * DeltaT.deltaT)
 
   }
 
@@ -43,15 +43,15 @@ class Planet(geometry: Geometry, material: Material, _mass: Double, _radious: Do
     lastPosition.x = mesh.position.x
     lastPosition.y = mesh.position.y
     lastPosition.z = mesh.position.z
-    mesh.position.x = 2 * mesh.position.x - lastPosition.x + ( (force.x/mass) * Math.pow(deltaT,2) )
-    mesh.position.y = 2 * mesh.position.y - lastPosition.y + ( (force.y/mass) * Math.pow(deltaT,2) )
-    mesh.position.z = 2 * mesh.position.z - lastPosition.z + ( (force.z/mass) * Math.pow(deltaT,2) )
+    mesh.position.x = 2 * mesh.position.x - lastPosition.x + ( (force.x/mass) * Math.pow(DeltaT.deltaT,2) )
+    mesh.position.y = 2 * mesh.position.y - lastPosition.y + ( (force.y/mass) * Math.pow(DeltaT.deltaT,2) )
+    mesh.position.z = 2 * mesh.position.z - lastPosition.z + ( (force.z/mass) * Math.pow(DeltaT.deltaT,2) )
   }
 
   def recalculateFirstEulerPosition(): Unit = {
-    lastPosition.x = mesh.position.x + (velocity.x * deltaT)
-    lastPosition.y = mesh.position.y + (velocity.y * deltaT)
-    lastPosition.z = mesh.position.z + (velocity.z * deltaT)
+    lastPosition.x = mesh.position.x + (velocity.x * DeltaT.deltaT)
+    lastPosition.y = mesh.position.y + (velocity.y * DeltaT.deltaT)
+    lastPosition.z = mesh.position.z + (velocity.z * DeltaT.deltaT)
   }
 
 
