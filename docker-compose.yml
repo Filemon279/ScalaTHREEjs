@@ -1,0 +1,24 @@
+version: '0.1'
+services:
+  three-physics-scala:
+    image: ingensi/play-framework
+    ports:
+     - "9000:9000"
+    volumes:
+     - .:/app
+    volumes_from:
+     - sbt
+    stdin_open: true
+    command: activator run
+  eventstore:
+    image: eventstore/eventstore
+    ports:
+     - 2113:2113
+     - 1113:1113
+  sbt:
+    image: centos
+    volumes:
+     - ~/.ivy2:/root/.ivy2:rw
+     - ~/.ivy2:/home/docker/.ivy2:rw
+     - ~/.sbt:/root/.sbt:rw
+     - ~/.sbt:/home/docker/.sbt:rw
