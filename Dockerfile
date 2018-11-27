@@ -1,4 +1,3 @@
-$ cat target/docker/Dockerfile
 FROM openjdk:latest
 WORKDIR /opt/docker
 ADD opt /opt
