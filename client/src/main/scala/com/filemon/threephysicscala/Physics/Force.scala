@@ -1,4 +1,4 @@
-package physics.webapp.Physicsimport
+package physics.webapp.Physics
 import physics.webapp.Physics.Constants
 import physics.webapp.SpaceObjects.Planet
 import physics.webapp.THREE.Geometryimport.Geometry.Mesh

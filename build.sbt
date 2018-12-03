@@ -17,13 +17,13 @@ lazy val server = (project in file("server")).settings(commonSettings).settings(
   dependsOn(sharedJvm)
 
 lazy val client = (project in file("client")).settings(commonSettings).settings(
-  scalaJSUseMainModuleInitializer := true,
+  webpackBundlingMode := BundlingMode.LibraryAndApplication(),
   libraryDependencies ++= Seq(
     "org.scala-js" %%% "scalajs-dom" % "0.9.6",
     "org.webjars.bower" % "jquery" % "3.3.1"
   )
 
-).enablePlugins(ScalaJSPlugin, ScalaJSWeb).
+).enablePlugins(ScalaJSBundlerPlugin, ScalaJSWeb).
   dependsOn(sharedJs)
 
 lazy val shared = crossProject(JSPlatform, JVMPlatform)

@@ -1,7 +1,7 @@
 package physics.webapp.SpaceObjects
 
 import physics.webapp.Physics.{Constants, DeltaT, Velocity}
-import physics.webapp.Physicsimport.Force
+import physics.webapp.Physics.Force
 import physics.webapp.THREE.Geometryimport.Geometry.{Geometry, Mesh}
 import physics.webapp.THREE.Materials.Material
 import physics.webapp.THREE.Math.Vector3
@@ -57,6 +57,12 @@ class Planet(geometry: Geometry, material: Material, _mass: Double, _radious: Do
 
   def position(): Vector3 = {
     new Vector3(mesh.position.x, mesh.position.y, mesh.position.z)
+  }
+
+  def setForce(inForce: Vector3): Unit = {
+    force.x = inForce.x
+    force.y = inForce.y
+    force.z = inForce.z
   }
 
   def addForce(inForce: Vector3): Unit = {

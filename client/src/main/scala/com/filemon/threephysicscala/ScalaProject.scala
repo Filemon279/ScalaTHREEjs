@@ -3,12 +3,12 @@ package physics.webapp
 
 import com.filemon.threephysicscala.datgui.GUI
 
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
+import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
 import org.scalajs.dom
 import dom.document
 import physics.webapp.Environment.{Background, Planets}
 import physics.webapp.Physics._
-import physics.webapp.Physicsimport.Force
+import physics.webapp.Physics.Force
 import physics.webapp.SpaceObjects.Planet
 import physics.webapp.THREE.Camera.{OrbitControls, PerspectiveCamera, TrackballControls}
 import physics.webapp.THREE.Geometryimport.Geometry.{Geometry, Mesh, SphereGeometry}
@@ -19,10 +19,11 @@ import physics.webapp.THREE.Objects.{Line, Scene, WebGLRenderer}
 
 import scala.scalajs.js
 
+@JSExportTopLevel("physics.webapp.ScalaProject")
+@JSExportAll
 object ScalaProject extends Constants with Planets with Background {
-  def main(args: Array[String]): Unit = {
-    createTestCube()
-  }
+
+  def testFunction(): String = "text"
 
   def createTestCube(): Unit = {
 
@@ -38,9 +39,8 @@ object ScalaProject extends Constants with Planets with Background {
 
     var verle: Int = 0
     var lineLenght: Int = 300
-
-    var obj = js.Dynamic.literal(Density=0, EarthMass=earthMass, SunLargeMass=sunMass, SunSmallMass=smallSunMall, Sun3Mass=sun3Mass, Verle=0, LineLenght=lineLenght, DeltaT=DeltaT.deltaT)
-
+    var obj = js.Dynamic.literal(Density=0, EarthMass=earthMass, SunLargeMass=sunMass, SunSmallMass=smallSunMall, Sun3Mass=sun3Mass,
+      Verle=0, LineLenght=lineLenght, DeltaT=DeltaT.deltaT)
     var density: Double = 0
 
 
@@ -99,7 +99,6 @@ object ScalaProject extends Constants with Planets with Background {
     earth.applyForce(Force.gravitationForce(sun3, earth))
     earth.applyForce(Force.dragSphereForce(earth, density))
     earth.recalculateFirstEulerPosition()
-
 
     var geometry = new Geometry()
     var line = new Line( geometry, lineMaterial )
