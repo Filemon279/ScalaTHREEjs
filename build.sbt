@@ -23,7 +23,7 @@ lazy val client = (project in file("client")).settings(commonSettings).settings(
     "org.webjars.bower" % "jquery" % "3.3.1"
   )
 
-).enablePlugins(ScalaJSBundlerPlugin, ScalaJSWeb).
+).enablePlugins(ScalaJSWeb).
   dependsOn(sharedJs)
 
 lazy val shared = crossProject(JSPlatform, JVMPlatform)

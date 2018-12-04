@@ -17,6 +17,7 @@ services:
      - 1113:1113
   sbt:
     image: centos
+    tty: true
     volumes:
      - ~/.ivy2:/root/.ivy2:rw
      - ~/.ivy2:/home/docker/.ivy2:rw
