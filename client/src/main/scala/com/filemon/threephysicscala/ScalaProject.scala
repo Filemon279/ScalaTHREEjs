@@ -112,6 +112,7 @@ object ScalaProject extends Constants with Planets with Background {
       earth.mesh.rotation.y += .005
       controls.update()
       renderer.render(scene, camera)
+      earth.resetForce()
       earth.addForce(Force.gravitationForce(sun, earth))
       earth.addForce(Force.gravitationForce(sun2, earth))
       earth.addForce(Force.gravitationForce(sun3, earth))
