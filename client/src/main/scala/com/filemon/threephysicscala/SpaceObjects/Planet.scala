@@ -64,6 +64,12 @@ class Planet(geometry: Geometry, material: Material, _mass: Double, _radious: Do
     force.y = inForce.y
     force.z = inForce.z
   }
+  
+  def resetForce(): Unit = {
+    force.x = 0
+    force.y = 0
+    force.z = 0
+  }
 
   def addForce(inForce: Vector3): Unit = {
     force.x += inForce.x
