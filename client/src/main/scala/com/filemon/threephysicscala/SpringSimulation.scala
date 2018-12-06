@@ -70,6 +70,7 @@ object SpringSimulation {
       dom.window.requestAnimationFrame(renderLoop _)
       controls.update()
       renderer.render(scene, camera)
+      earth.resetForce()
       earth.addForce(Spring.springForce(earth, sun, 1, 30))
       earth.recalculateVerletPosition()
       addLine();
