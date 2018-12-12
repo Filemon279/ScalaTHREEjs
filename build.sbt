@@ -19,6 +19,7 @@ lazy val server = (project in file("server")).settings(commonSettings).settings(
 lazy val client = (project in file("client")).settings(commonSettings).settings(
   webpackBundlingMode := BundlingMode.LibraryAndApplication(),
   libraryDependencies ++= Seq(
+    "org.querki" %%% "jquery-facade" % "1.2",
     "org.scala-js" %%% "scalajs-dom" % "0.9.6",
     "org.webjars.bower" % "jquery" % "3.3.1"
   )

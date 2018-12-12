@@ -35,7 +35,7 @@ object SpringSimulation {
 
     val onLocalDeltaChange: js.Any => js.Any = (arg: js.Any) => {DeltaT.deltaT = arg.asInstanceOf[Double]}
 
-    gui.add(obj, "DeltaT").min(0.0009).max(0.2).step(0.00001).onChange(onLocalDeltaChange)
+    gui.add(obj, "DeltaT").min(0.0009).max(2.2).step(0.00001).onChange(onLocalDeltaChange)
 
     controls.rotateSpeed = 2.0
     controls.zoomSpeed = 0.6
@@ -72,6 +72,7 @@ object SpringSimulation {
       renderer.render(scene, camera)
       earth.resetForce()
       earth.addForce(Spring.springForce(earth, sun, 1, 30))
+      println(earth.force.x+" "+earth.force.y+" "+earth.force.z)
       earth.recalculateVerletPosition()
       addLine();
     }

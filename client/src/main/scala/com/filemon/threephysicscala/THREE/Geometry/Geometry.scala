@@ -6,6 +6,7 @@ import physics.webapp.THREE.THREE.Matrix4
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSGlobal
+import scala.scalajs.js.typedarray.{Float32Array, TypedArray}
 
 object Geometry {
 
@@ -62,8 +63,21 @@ object Geometry {
   @js.native
   @JSGlobal("THREE.BufferGeometry")
   class BufferGeometry() extends Geometry {
+    def addAttribute ( name : String, attribute : BufferAttribute ) : BufferGeometry = js.native
+  }
+
+  @js.native
+  @JSGlobal("THREE.BufferAttribute")
+  class BufferAttribute( array : Float32Array = js.native, itemSize : Integer = js.native, normalized : Boolean = js.native) extends js.Object {
+  }
+
+  @js.native
+  @JSGlobal("THREE.PlaneGeometry")
+  class PlaneGeometry(width : Double, height : Double, widthSegments : Integer = js.native, heightSegments : Integer = js.native) extends Geometry {
 
   }
+
+
 
   @js.native
   @JSGlobal("THREE.BoxGeometry")
@@ -88,6 +102,17 @@ object Geometry {
 
   @js.native
   @JSGlobal("THREE.Mesh")
-  class Mesh(geometry: Geometry, material: Material) extends Object3D
+  class Mesh(var geometry: Geometry, var material: Material) extends Object3D
+
+  @js.native
+  @JSGlobal("THREE.PointCloud")
+  class PointCloud(var geometry: Geometry, var material: Material) extends Object3D
+
+
+  @js.native
+  @JSGlobal("THREE.Points")
+  class Points(var geometry: Geometry, var material: Material) extends Object3D
+
+
 
 }

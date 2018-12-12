@@ -5,7 +5,50 @@ import scala.scalajs.js.annotation.JSGlobal
 
 
 
-class Material extends js.Object
+class Material extends js.Object {
+  var alphaTest : Float = js.native
+  var blendDst : Integer = js.native
+  var blendDstAlpha : Integer = js.native
+  var blendEquation : Integer = js.native
+  var blendEquationAlpha : Integer = js.native
+  //var blending : Blending = js.native
+  var blendSrc : Integer = js.native
+  var blendSrcAlpha : Integer = js.native
+  var clipIntersection : Boolean = js.native
+  //var clippingPlanes : js.Array = js.native
+  var clipShadows : Boolean = js.native
+  var colorWrite : Boolean = js.native
+  var customDepthMaterial : Material = js.native
+  var customDistanceMaterial : Material = js.native
+  var defines : js.Object = js.native
+  var depthFunc : Integer = js.native
+  var depthTest : Boolean = js.native
+  var depthWrite : Boolean = js.native
+  var flatShading : Boolean = js.native
+  var fog : Boolean = js.native
+  var id : Integer = js.native
+  var isMaterial : Boolean = js.native
+  var lights : Boolean = js.native
+  var name : String = js.native
+  var needsUpdate : Boolean = js.native
+  var opacity : Float = js.native
+  var polygonOffset : Boolean = js.native
+  var polygonOffsetFactor : Integer = js.native
+  var polygonOffsetUnits : Integer = js.native
+  var precision : String = js.native
+  var premultipliedAlpha : Boolean = js.native
+  var dithering : Boolean = js.native
+  var shadowSide : Integer = js.native
+  var side : Integer = js.native
+  var transparent : Boolean = js.native
+  var `type` : String = js.native
+  var uuid : String = js.native
+  var vertexColors : Integer = js.native
+  var visible : Boolean = js.native
+  var userData : js.Object = js.native
+
+  var size: Double = js.native
+}
 
 @js.native
 @JSGlobal("THREE.MeshBasicMaterial")
@@ -19,6 +62,21 @@ class MeshStandardMaterial(parameters: js.Dynamic) extends Material
 @JSGlobal("THREE.LineBasicMaterial")
 class LineBasicMaterial(parameters: js.Dynamic) extends Material
 
+@js.native
+@JSGlobal("THREE.PointCloudMaterial")
+class PointCloudMaterial(parameters: js.Dynamic) extends Material
+
+@js.native
+@JSGlobal("THREE.PointsMaterial")
+class PointsMaterial(parameters: js.Dynamic) extends Material
+
+@js.native
+@JSGlobal("THREE.ShaderMaterial")
+class ShaderMaterial(parameters: js.Dynamic) extends Material
+
+@js.native
+@JSGlobal("THREE.MeshShaderMaterial")
+class MeshShaderMaterial(parameters: js.Dynamic) extends Material
 
 //////////////////////////
 //    Side

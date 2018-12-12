@@ -9,11 +9,15 @@ import play.api.mvc._
 class Application @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   def index = Action {
-    Ok(views.html.index(SharedMessages.itWorks))
+    Ok(views.html.index(SharedMessages.gravityTitle))
   }
 
   def spring = Action {
-    Ok(views.html.spring(SharedMessages.itSpringWorks))
+    Ok(views.html.spring(SharedMessages.springTitle))
+  }
+
+  def particle = Action {
+    Ok(views.html.particle(SharedMessages.particleTitle))
   }
 
 }

@@ -5,6 +5,7 @@
 # Home page
 GET        /                             com.filemon.threephysicscala.controllers.Application.index
 GET        /spring                       com.filemon.threephysicscala.controllers.Application.spring
+GET        /particle                     com.filemon.threephysicscala.controllers.Application.particle
 
 # Prefix must match `play.assets.urlPrefix`
 #GET        /assets/*file                 controllers.Assets.at(file)

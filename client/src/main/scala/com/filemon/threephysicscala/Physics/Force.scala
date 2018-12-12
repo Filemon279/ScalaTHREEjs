@@ -1,4 +1,5 @@
 package physics.webapp.Physics
+import com.filemon.threephysicscala.SpaceObjects.Particle
 import physics.webapp.Physics.Constants
 import physics.webapp.SpaceObjects.Planet
 import physics.webapp.THREE.Geometryimport.Geometry.Mesh
@@ -12,6 +13,10 @@ object Force extends Constants{
     new Vector3(vec.x * const, vec.y * const, vec.z * const)
   }
 
+  def earthGravitationForce(obj1: Particle): Vector3 = {
+    val const: Double = -0.1
+    new Vector3(0, const, 0)
+  }
 
   def dragSphereForce(obj1: Planet, density: Double): Vector3 = {
     val calc = -6 * Math.PI * density * obj1.radious
@@ -22,6 +27,10 @@ object Force extends Constants{
     val newVector = new Vector3( (v1.x-v2.x), (v1.y-v2.y), (v1.z-v2.z) )
     val ver = 1 / ( Math.pow(newVector.x, 2) + Math.pow(newVector.y, 2) + Math.pow(newVector.z, 2) )
     new Vector3( ver*newVector.x, ver*newVector.y, ver*newVector.z)
+  }
+
+  def customForce(xForce: Double, yForce: Double, zForce: Double): Vector3 = {
+    new Vector3(xForce, yForce, zForce)
   }
 
 

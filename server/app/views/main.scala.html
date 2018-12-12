@@ -11,6 +11,8 @@
     <script src="@routes.Assets.versioned("libraries/TrackballControls.js")"></script>
     <script src="@routes.Assets.versioned("libraries/dat.gui.js")"></script>
     <script src="@routes.Assets.versioned("libraries/jquery.js")"></script>
+
+
   </head>
   <body>
     @scalajs.html.scripts("client", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null)

@@ -1,0 +1,24 @@
+@(message: String)
+
+@main(message) {
+
+<script type='x-shader/x-fragment' id='vertex-shader'>
+
+    void main() {
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      gl_PointSize = 3.;
+    }
+
+</script>
+
+<script type='x-shader/x-fragment' id='fragment-shader'>
+
+    void main() {
+        gl_FragColor = vec4(0.5, 0.2, 1.0, 1.0); // Works; Displays Flat Color
+    }
+
+</script>
+
+<script> physics.webapp.ParticleSystem.init()</script>
+
+}
