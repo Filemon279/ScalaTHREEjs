@@ -70,7 +70,7 @@ import scala.scalajs.js.annotation.JSGlobal
   //def renderBufferImmediate ( object : Object3D, program : shaderprogram, shading : Material ) : Unit = js.native
   def setAnimationLoop ( callback : Unit ) : Unit = js.native
   def setClearAlpha ( alpha : Float ) : Unit = js.native
-  def setClearColor ( color : Color, alpha : Float ) : Unit = js.native
+  def setClearColor ( color : Int, alpha : Float ) : Unit = js.native
   def setPixelRatio ( value : Double ) : Unit = js.native
   def setRenderTarget ( renderTarget : WebGLRenderTarget ) : Unit = js.native
   def setScissor ( x : Integer, y : Integer, width : Integer, height : Integer ) : Unit = js.native

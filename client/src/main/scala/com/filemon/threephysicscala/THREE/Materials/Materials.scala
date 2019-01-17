@@ -59,6 +59,14 @@ class MeshBasicMaterial(parameters: js.Dynamic) extends Material
 class MeshStandardMaterial(parameters: js.Dynamic) extends Material
 
 @js.native
+@JSGlobal("THREE.MeshNormalMaterial")
+class MeshNormalMaterial(parameters: js.Dynamic) extends Material
+
+@js.native
+@JSGlobal("THREE.MeshPhongMaterial")
+class MeshPhongMaterial(parameters: js.Dynamic) extends Material
+
+@js.native
 @JSGlobal("THREE.LineBasicMaterial")
 class LineBasicMaterial(parameters: js.Dynamic) extends Material
 
@@ -92,7 +100,7 @@ object BackSide extends js.Object
 object FrontSide extends js.Object
 
 @js.native
-@JSGlobal("THREE.FrontSide")
+@JSGlobal("THREE.DoubleSide")
 object DoubleSide extends js.Object
 
 

@@ -1,8 +1,9 @@
 package physics.webapp.THREE.Geometryimport
+import com.filemon.threephysicscala.PhysicVertex
 import physics.webapp.THREE.Materials.Material
 import physics.webapp.THREE.Math.Vector3
 import physics.webapp.THREE.Objects.Object3D
-import physics.webapp.THREE.THREE.Matrix4
+import physics.webapp.THREE.THREE.{Face3, Matrix4}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSGlobal
@@ -16,7 +17,7 @@ object Geometry {
  //var boundingBox : Box3 = js.native
  //var boundingSphere : Sphere = js.native
  var colors : Array[_] = js.native
- var faces : Array[_] = js.native
+ var faces : js.Array[Face3] = js.native
  var faceVertexUvs : Array[_] = js.native
  var isGeometry : Boolean = js.native
  var lineDistances : Array[_] = js.native

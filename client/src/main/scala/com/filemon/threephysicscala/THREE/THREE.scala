@@ -11,6 +11,12 @@ object THREE {
 
   class Layers()
 
+
+
+  @js.native
+  @JSGlobal("THREE.Face3")
+  class Face3( a : Integer = js.native , b : Integer = js.native , c : Integer = js.native , normal : Vector3 = js.native , color : Int = js.native , materialIndex : Integer = js.native ) extends js.Object
+
   @js.native
   @JSGlobal("Matrix3")
   class Matrix3() extends js.Object

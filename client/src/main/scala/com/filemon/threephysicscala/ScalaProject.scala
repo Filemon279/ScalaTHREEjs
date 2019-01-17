@@ -1,6 +1,7 @@
 package physics.webapp
 
 
+import com.filemon.threephysicscala.{CustomBox, CustomSphere}
 import com.filemon.threephysicscala.datgui.GUI
 
 import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
@@ -11,9 +12,9 @@ import physics.webapp.Physics._
 import physics.webapp.Physics.Force
 import physics.webapp.SpaceObjects.Planet
 import physics.webapp.THREE.Camera.{OrbitControls, PerspectiveCamera, TrackballControls}
-import physics.webapp.THREE.Geometryimport.Geometry.{Geometry, Mesh, SphereGeometry}
+import physics.webapp.THREE.Geometryimport.Geometry.{Geometry, Mesh, PlaneGeometry, SphereGeometry}
 import physics.webapp.THREE.Lights.{AmbientLight, PointLight}
-import physics.webapp.THREE.Materials.{LineBasicMaterial, MeshStandardMaterial, Texture, TextureLoader}
+import physics.webapp.THREE.Materials._
 import physics.webapp.THREE.Math.Vector3
 import physics.webapp.THREE.Objects.{Line, Scene, WebGLRenderer}
 
@@ -21,128 +22,121 @@ import scala.scalajs.js
 
 @JSExportTopLevel("physics.webapp.ScalaProject")
 @JSExportAll
-object ScalaProject extends Constants with Planets with Background {
+object ScalaProject extends Constants with Planets with Background with CustomBox {
 
-  def testFunction(): String = "text"
+  def createPlane(): Mesh = {
+    val geometry = new PlaneGeometry( 30, 30, 32 );
+    val material = new MeshPhongMaterial( js.Dynamic.literal(color = 0x156289, emissive = 0x072534, side = DoubleSide, flatShading = true) );
+    val mesh = new Mesh( geometry, material );
+    mesh.rotation.x = Math.PI / 2;
+    mesh
+  }
+
+  def addLight(x: Int, y: Int, z: Int): PointLight = {
+    val light = new PointLight( 0xffffff, 1, 0 );
+    light.position.set( x, y, z );
+    light
+  }
 
   def createTestCube(): Unit = {
 
     val scene = new Scene()
     val camera = new PerspectiveCamera(75, dom.window.innerWidth / dom.window.innerHeight, 0.1, 90000)
     val renderer = new WebGLRenderer(js.Dynamic.literal(antialias=true))
+    renderer.setPixelRatio( dom.window.devicePixelRatio );
+    renderer.setSize( dom.window.innerWidth, dom.window.innerHeight );
+    renderer.setClearColor( 0x000000, 1 );
+
     dom.document.body.appendChild(renderer.domElement)
     renderer.setSize(dom.window.innerWidth, dom.window.innerHeight)
 
+    val springGeometry = new SpringGeometry(5, 5, 5, 5, 5.00)
+
     val controls = new TrackballControls(camera, renderer.domElement)
-
     val gui = new GUI(js.Dynamic.literal(resizable= false, width=300))
-
-    var verle: Int = 0
-    var lineLenght: Int = 300
-    var obj = js.Dynamic.literal(Density=0, EarthMass=earthMass, SunLargeMass=sunMass, SunSmallMass=smallSunMall, Sun3Mass=sun3Mass,
-      Verle=0, LineLenght=lineLenght, DeltaT=DeltaT.deltaT)
-    var density: Double = 0
-
-
-    val earth = createPlanet(1, earthMass, "assets/images/textures/earthmap1k.jpg")
-    earth.initialPosition(10, 20, 5)
-    val sun = createPlanet(2, sunMass, "assets/images/textures/texture_sun.jpg")
-    val sun2 = createPlanet(1, smallSunMall, "assets/images/textures/texture_sun.jpg")
-    val sun3 = createPlanet(3, sun3Mass, "assets/images/textures/texture_sun.jpg")
-    sun2.initialPosition(30, -10, 20)
-    sun3.initialPosition(0, -70, -30)
-
-    val onDensityChange: js.Any => js.Any = (arg: js.Any) => {density = arg.asInstanceOf[Double]}
-    val onEarthMassChange: js.Any => js.Any = (arg: js.Any) => {earth.mass = arg.asInstanceOf[Double]}
-    val onSunLargeMassChange: js.Any => js.Any = (arg: js.Any) => {sun.mass = arg.asInstanceOf[Double]}
-    val onSunSmallMassChange: js.Any => js.Any = (arg: js.Any) => {sun2.mass = arg.asInstanceOf[Double]}
-    val onSun3MassChange: js.Any => js.Any = (arg: js.Any) => {sun3.mass = arg.asInstanceOf[Double]}
-    val onVerleChange: js.Any => js.Any = (arg: js.Any) => {verle = arg.asInstanceOf[Int]}
-    val onLineLenghtChange: js.Any => js.Any = (arg: js.Any) => {lineLenght = arg.asInstanceOf[Int]}
+    var obj = js.Dynamic.literal(DeltaT=DeltaT.deltaT, VertexMax=1.0, SpringForce=30)
     val onLocalDeltaChange: js.Any => js.Any = (arg: js.Any) => {DeltaT.deltaT = arg.asInstanceOf[Double]}
+    val onVertexMassChange: js.Any => js.Any = (arg: js.Any) => {
+      for(v <- springGeometry.physicVertex){
+        v.vertexMass = arg.asInstanceOf[Double]
+      }
+    }
 
-    gui.add(obj, "Density").min(0).max(20).step(0.1).onChange(onDensityChange)
-    gui.add(obj, "EarthMass").min(0).max(earthMass*2).step(0.1).onChange(onEarthMassChange)
-    gui.add(obj, "SunLargeMass").min(0).max(sunMass*2).step(0.1).onChange(onSunLargeMassChange)
-    gui.add(obj, "SunSmallMass").min(0).max(smallSunMall*2).step(0.1).onChange(onSunSmallMassChange)
-    gui.add(obj, "Sun3Mass").min(-sun3Mass).max(sun3Mass*2).step(0.1).onChange(onSun3MassChange)
-    gui.add(obj, "Verle").min(0).max(1).step(1).onChange(onVerleChange)
-    gui.add(obj, "LineLenght").min(10).max(2500).step(1).onChange(onLineLenghtChange)
-    gui.add(obj, "DeltaT").min(0.0009).max(0.1).step(0.00001).onChange(onLocalDeltaChange)
-
+    val onSpringForceChange: js.Any => js.Any = (arg: js.Any) => {
+      springGeometry.springForce = arg.asInstanceOf[Int]
+    }
 
     controls.rotateSpeed = 2.0
     controls.zoomSpeed = 0.6
     controls.minDistance = 1
-    controls.dynamicDampingFactor = 0.08
+    controls.dynamicDampingFactor = 0.38
 
-    val light = new AmbientLight(0xffffff, 2)
 
-    camera.position.z = 50
+    gui.add(obj, "DeltaT").min(0.010).max(1.1).step(0.00001).onChange(onLocalDeltaChange)
+    gui.add(obj, "VertexMax").min(0.00).max(100.1).step(0.01).onChange(onVertexMassChange)
+    gui.add(obj, "SpringForce").min(1).max(1000).step(1.0).onChange(onSpringForceChange)
 
-    val starBackground = generateBackground(1000,  "assets/images/textures/galaxy_starfield7.jpg" )
 
-    scene.add(sun.mesh)
-    scene.add(sun2.mesh)
-    scene.add(sun3.mesh)
+    camera.position.z = 15
+    camera.position.y = 5
+    //val starBackground = generateBackground(1000,  "assets/images/textures/galaxy_starfield7.jpg" )
+    scene.add( addLight(0, 100, 200) )
+    scene.add( addLight(100, 200, 100) )
+    scene.add( addLight(-100, -200, -100) )
+    val plane = createPlane()
+    scene.add( plane );
+    springGeometry.initDistances()
 
-    scene.add(earth.mesh)
-    scene.add(light)
-    scene.add(starBackground)
+    scene.add( springGeometry.sphere );
+    springGeometry.sphere.position.y = 5;
+    springGeometry.initFirstPosition()
+    springGeometry.sphere.updateMatrixWorld(true)
+    springGeometry.sphere.geometry.verticesNeedUpdate = true;
+  println(springGeometry.sphere.geometry.vertices.length)
 
-    val lineMaterial = new LineBasicMaterial(js.Dynamic.literal(color=0xffffff ));
 
-    earth.velocity = new Vector3(20, 0, 10)
+    val material = new LineBasicMaterial(js.Dynamic.literal(color = 0x909090))
 
-    earth.applyForce(Force.gravitationForce(sun, earth))
-    earth.applyForce(Force.gravitationForce(sun2, earth))
-    earth.applyForce(Force.gravitationForce(sun3, earth))
-    earth.applyForce(Force.dragSphereForce(earth, density))
-    earth.recalculateFirstEulerPosition()
 
-    var geometry = new Geometry()
-    var line = new Line( geometry, lineMaterial )
+    for((v, index) <- springGeometry.physicVertex.zipWithIndex){
+      if(v.connectedToIndex > 0) {
+        val testSphere = new SphereGeometry(0.1, 5, 5)
+        val material = new MeshPhongMaterial(js.Dynamic.literal(color = 0x909090, side = DoubleSide, flatShading = true));
+        val sphere = new Mesh(testSphere, material);
+        val spherePosition = springGeometry.sphere.localToWorld(v.prevPosition.clone())
+        val linkedToPosition = springGeometry.sphere.localToWorld(springGeometry.physicVertex(v.connectedToIndex).prevPosition.clone())
+        sphere.position.set(spherePosition.x, spherePosition.y, spherePosition.z)
+        scene.add(sphere);
+
+        var geometry = new Geometry();
+        geometry.vertices.push(
+          new Vector3(spherePosition.x, spherePosition.y, spherePosition.z),
+          new Vector3(linkedToPosition.x, linkedToPosition.y, linkedToPosition.z),
+        );
+
+        println("index: "+index+" : "+v.connectedToIndex)
+        println(v.initialDistances.x+", "+v.initialDistances.y+", "+v.initialDistances.z+", ")
+
+        var line = new Line(geometry, material);
+        scene.add(line);
+      }
+
+    }
+
+  //println(springGeometry.sphere.geometry.vertices(10).x=6)
+ // println(springSphereGeometry.sphere.geometry.vertices(31).y)
 
     def renderLoop(timestamp: Double): Unit = {
       dom.window.requestAnimationFrame(renderLoop _)
-
-      sun.mesh.rotation.x += .005
-      sun.mesh.rotation.y += .005
-      earth.mesh.rotation.x -= .005
-      earth.mesh.rotation.y += .005
       controls.update()
+      springGeometry.letsGoOverEveryVertex()
       renderer.render(scene, camera)
-      earth.resetForce()
-      earth.addForce(Force.gravitationForce(sun, earth))
-      earth.addForce(Force.gravitationForce(sun2, earth))
-      earth.addForce(Force.gravitationForce(sun3, earth))
-      if (verle==1) earth.recalculateVerletPosition()
-      else {
-        earth.applyForce(Force.gravitationForce(sun, earth))
-        earth.applyForce(Force.gravitationForce(sun2, earth))
-        earth.applyForce(Force.gravitationForce(sun3, earth))
-        earth.applyForce(Force.dragSphereForce(earth, density))
-        earth.recalculateEulerPosition()
-      }
-      addLine()
-    }
+      springGeometry.sphere.updateMatrixWorld(true)
+      springGeometry.sphere.geometry.verticesNeedUpdate = true;
 
-    def addLine() = {
-      scene.remove( line );
-      var vertices: js.Array[Vector3] = geometry.vertices
-      if(vertices.length > lineLenght){
-        vertices.splice(0, 1)
-      }
-      vertices.push(earth.position());
-      geometry = new Geometry()
-      geometry.vertices = vertices;
-      line = new Line( geometry, lineMaterial )
-      scene.add( line );
-      line.updateMatrix();
     }
 
     renderLoop(System.currentTimeMillis())
-
     dom.window.addEventListener( "resize", (onWindowResize _), false)
 
     def onWindowResize[T](arg: T) = {

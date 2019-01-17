@@ -2,6 +2,7 @@ package physics.webapp.Physics
 
 trait Constants {
 
+  var EARTH_G = 9.81 //m/s^2
   var deltaT = 0.009
   val earthMass = 50//5.97219 * Math.pow(10,24) // kg
   val earthRadius = 6371.008 //km
@@ -15,5 +16,5 @@ trait Constants {
 }
 
 object DeltaT {
-  var deltaT = 0.009
+  var deltaT = 0.010
 }

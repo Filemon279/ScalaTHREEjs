@@ -19,6 +19,8 @@ class Vector3(var x: Double, var y: Double, var z: Double) extends Vector {
   def multiplyScalar ( s : Double ) : Vector3 = js.native
   def copy ( v : Vector3 ) : Vector3 = js.native
   def add ( v : Vector3 ) : Vector3 = js.native
+  def set (x: Double, y: Double, z: Double) : Unit = js.native
+  override def clone() : this.type = js.native
 
 
   override def toString: String = "x: "+x+" | y: "+y+" | z: "+z
