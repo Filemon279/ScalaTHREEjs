@@ -1,5 +1,6 @@
-package com.filemon.threephysicscala
 
+package com.filemon.threephysicscala
+/*
 import physics.webapp.Physics.{Constants, DeltaT}
 import physics.webapp.THREE.Geometryimport.Geometry.{Geometry, Mesh, SphereGeometry}
 import physics.webapp.THREE.Materials.{DoubleSide, MeshNormalMaterial, MeshPhongMaterial}
@@ -9,14 +10,6 @@ import physics.webapp.THREE.THREE.Face3
 import scala.scalajs.js
 
 
-class PhysicVertex(var position: Vector3, m: Double, var connectedToIndex: Int) {
-  var prevPosition: Vector3 = new Vector3(position.x, position.y, position.z)
-  var force: Vector3 = new Vector3(0,0,0)
-  var vertexMass: Double = m;
-  var springDistnace: Double = 1;
-  var initialDistances: Vector3 = new Vector3(0,0,0)
-
-}
 
 
 trait CustomSphere {
@@ -43,7 +36,7 @@ trait CustomSphere {
 
       if(index == 0) {
         val connectedTo = 1
-        physicVertex(index) = new PhysicVertex(v, vertexMass, connectedTo)
+        physicVertex(index) = new PhysicVertex(v, vertexMass)
       }
 
       if(index > 0 && index < newRowIndex) {
@@ -204,3 +197,4 @@ trait CustomSphere {
 
 
 }
+*/

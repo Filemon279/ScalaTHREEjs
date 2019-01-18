@@ -23,7 +23,7 @@ class Line(var geometry : Geometry, var material : Material) extends Object3D {
 
  def computeLineDistances () : Line = js.native
  def raycast[T] ( raycaster : Raycaster, intersects : Array[T] ) : Unit = js.native
- override def clone () : Line = js.native
+ override def clone () : this.type = js.native
 
 }
 
@@ -61,7 +61,7 @@ var visible : Boolean = js.native
  def add ( `object` : Object3D) : Unit = js.native
  def applyMatrix ( matrix : Matrix4 ) : Unit = js.native
  def applyQuaternion ( quaternion : Quaternion ) : Object3D = js.native
- def clone ( recursive : Boolean ) : Object3D = js.native
+ override def clone() : this.type = js.native
  def copy ( `object` : Object3D, recursive : Boolean ) : Object3D = js.native
  def getObjectById ( id : Integer ) : Object3D = js.native
  def getObjectByName ( name : String ) : Object3D = js.native

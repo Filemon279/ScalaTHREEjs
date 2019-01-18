@@ -1,7 +1,7 @@
 package physics.webapp
 
 
-import com.filemon.threephysicscala.{CustomBox, CustomSphere}
+import com.filemon.threephysicscala.{CustomBox}
 import com.filemon.threephysicscala.datgui.GUI
 
 import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
@@ -29,6 +29,7 @@ object ScalaProject extends Constants with Planets with Background with CustomBo
     val material = new MeshPhongMaterial( js.Dynamic.literal(color = 0x156289, emissive = 0x072534, side = DoubleSide, flatShading = true) );
     val mesh = new Mesh( geometry, material );
     mesh.rotation.x = Math.PI / 2;
+    mesh.position.y = -0.1
     mesh
   }
 
@@ -50,20 +51,23 @@ object ScalaProject extends Constants with Planets with Background with CustomBo
     dom.document.body.appendChild(renderer.domElement)
     renderer.setSize(dom.window.innerWidth, dom.window.innerHeight)
 
-    val springGeometry = new SpringGeometry(5, 5, 5, 5, 5.00)
+    val vertexMass = 0.9
+
+    val springGeometry = new SpringGeometry(10, 10, 5, 5, vertexMass)
 
     val controls = new TrackballControls(camera, renderer.domElement)
     val gui = new GUI(js.Dynamic.literal(resizable= false, width=300))
-    var obj = js.Dynamic.literal(DeltaT=DeltaT.deltaT, VertexMax=1.0, SpringForce=30)
+    var obj = js.Dynamic.literal(DeltaT=DeltaT.deltaT, WindForce=DeltaT.windForce, VertexMax=vertexMass, SpringForce=10000)
     val onLocalDeltaChange: js.Any => js.Any = (arg: js.Any) => {DeltaT.deltaT = arg.asInstanceOf[Double]}
+    val onWindForceChange: js.Any => js.Any = (arg: js.Any) => {DeltaT.windForce = arg.asInstanceOf[Double]}
     val onVertexMassChange: js.Any => js.Any = (arg: js.Any) => {
-      for(v <- springGeometry.physicVertex){
-        v.vertexMass = arg.asInstanceOf[Double]
+      for((v, index) <- springGeometry.physicVertex.zipWithIndex){
+         v.vertexMass = arg.asInstanceOf[Double]
+        }
       }
-    }
 
     val onSpringForceChange: js.Any => js.Any = (arg: js.Any) => {
-      springGeometry.springForce = arg.asInstanceOf[Int]
+      //springGeometry.springConstants = arg.asInstanceOf[Int]
     }
 
     controls.rotateSpeed = 2.0
@@ -73,32 +77,37 @@ object ScalaProject extends Constants with Planets with Background with CustomBo
 
 
     gui.add(obj, "DeltaT").min(0.010).max(1.1).step(0.00001).onChange(onLocalDeltaChange)
-    gui.add(obj, "VertexMax").min(0.00).max(100.1).step(0.01).onChange(onVertexMassChange)
-    gui.add(obj, "SpringForce").min(1).max(1000).step(1.0).onChange(onSpringForceChange)
+    gui.add(obj, "WindForce").min(0.001).max(1.0).step(0.001).onChange(onWindForceChange)
+    gui.add(obj, "VertexMax").min(0.1).max(100.0).step(0.01).onChange(onVertexMassChange)
+    gui.add(obj, "SpringForce").min(1).max(10000).step(1.0).onChange(onSpringForceChange)
 
 
-    camera.position.z = 15
+    camera.position.z = 25
     camera.position.y = 5
     //val starBackground = generateBackground(1000,  "assets/images/textures/galaxy_starfield7.jpg" )
-    scene.add( addLight(0, 100, 200) )
-    scene.add( addLight(100, 200, 100) )
-    scene.add( addLight(-100, -200, -100) )
+    scene.add( addLight(0, 1000, 2000) )
+    scene.add( addLight(5, 20, 5) )
+    scene.add( addLight(-100, -200, -10) )
     val plane = createPlane()
     scene.add( plane );
-    springGeometry.initDistances()
+
+    springGeometry.addSpringAlgConnections()
+    springGeometry.addSpringConnectionsMixed()
+    springGeometry.addSpringHorizontal()
+    springGeometry.addSpringOther()
 
     scene.add( springGeometry.sphere );
-    springGeometry.sphere.position.y = 5;
-    springGeometry.initFirstPosition()
+
+    springGeometry.initFirstPositionStep()
     springGeometry.sphere.updateMatrixWorld(true)
     springGeometry.sphere.geometry.verticesNeedUpdate = true;
-  println(springGeometry.sphere.geometry.vertices.length)
+    println(springGeometry.sphere.geometry.vertices.length)
 
 
     val material = new LineBasicMaterial(js.Dynamic.literal(color = 0x909090))
 
 
-    for((v, index) <- springGeometry.physicVertex.zipWithIndex){
+ /*   for((v, index) <- springGeometry.physicVertex.zipWithIndex){
       if(v.connectedToIndex > 0) {
         val testSphere = new SphereGeometry(0.1, 5, 5)
         val material = new MeshPhongMaterial(js.Dynamic.literal(color = 0x909090, side = DoubleSide, flatShading = true));
@@ -121,7 +130,7 @@ object ScalaProject extends Constants with Planets with Background with CustomBo
         scene.add(line);
       }
 
-    }
+    }*/
 
   //println(springGeometry.sphere.geometry.vertices(10).x=6)
  // println(springSphereGeometry.sphere.geometry.vertices(31).y)

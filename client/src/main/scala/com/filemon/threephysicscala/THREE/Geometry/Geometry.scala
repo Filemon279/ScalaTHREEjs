@@ -36,7 +36,6 @@ object Geometry {
 
   override def applyMatrix ( matrix : Matrix4 ) : Unit = js.native
   def center () : Geometry = js.native
-  override def clone () : Geometry = js.native
   def computeBoundingBox () : Unit = js.native
   def computeBoundingSphere () : Unit = js.native
   def computeFaceNormals () : Unit = js.native
