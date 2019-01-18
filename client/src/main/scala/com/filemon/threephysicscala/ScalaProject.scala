@@ -76,10 +76,10 @@ object ScalaProject extends Constants with Planets with Background with CustomBo
     controls.dynamicDampingFactor = 0.38
 
 
-    gui.add(obj, "DeltaT").min(0.010).max(1.1).step(0.00001).onChange(onLocalDeltaChange)
-    gui.add(obj, "WindForce").min(0.001).max(1.0).step(0.001).onChange(onWindForceChange)
-    gui.add(obj, "VertexMax").min(0.1).max(100.0).step(0.01).onChange(onVertexMassChange)
-    gui.add(obj, "SpringForce").min(1).max(10000).step(1.0).onChange(onSpringForceChange)
+    //gui.add(obj, "DeltaT").min(0.010).max(1.1).step(0.00001).onChange(onLocalDeltaChange)
+    //gui.add(obj, "WindForce").min(0.001).max(1.0).step(0.001).onChange(onWindForceChange)
+    //gui.add(obj, "VertexMax").min(0.1).max(100.0).step(0.01).onChange(onVertexMassChange)
+    //gui.add(obj, "SpringForce").min(1).max(10000).step(1.0).onChange(onSpringForceChange)
 
 
     camera.position.z = 25
