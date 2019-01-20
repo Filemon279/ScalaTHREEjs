@@ -74,7 +74,11 @@ object Geometry {
   @js.native
   @JSGlobal("THREE.PlaneGeometry")
   class PlaneGeometry(width : Double, height : Double, widthSegments : Integer = js.native, heightSegments : Integer = js.native) extends Geometry {
+  }
 
+  @js.native
+  @JSGlobal("THREE.CylinderGeometry")
+  class CylinderGeometry(radiusTop: Double, radiusBottom: Double, height : Double, radialSegments: Int, heightSegments: Int  = js.native, openEnded : Boolean = js.native, thetaStart : Double = js.native, thetaLength : Double = js.native) extends Geometry {
   }
 
 

@@ -18,4 +18,5 @@ trait Constants {
 object DeltaT {
   var windForce = 0.03
   var deltaT = 0.02
+  var gravity = 5.0
 }
