@@ -150,6 +150,43 @@ pushString(0, 1, forceHorizontal)
 
 
 
+    def addSpringConnections() = {
+      pushString(0, 6)
+      pushString(1, 7)
+      pushString(2, 8)
+      pushString(3, 9)
+      pushString(4, 10)
+      pushString(5, 11)
+
+      pushString(6, 12)
+      pushString(7, 13)
+      pushString(8, 14)
+      pushString(9, 15)
+      pushString(10, 16)
+      pushString(11, 17)
+
+      pushString(12, 18)
+      pushString(13, 19)
+      pushString(14, 20)
+      pushString(15, 21)
+      pushString(16, 22)
+      pushString(17, 23)
+
+      pushString(18, 24)
+      pushString(19, 25)
+      pushString(20, 26)
+      pushString(21, 27)
+      pushString(22, 28)
+      pushString(23, 29)
+
+      pushString(24, 30)
+      pushString(25, 31)
+      pushString(26, 32)
+      pushString(27, 33)
+      pushString(28, 34)
+      pushString(29, 35)
+    }
+
 
         def addSpringConnections() = {
       pushString(0, 6)

@@ -74,6 +74,7 @@ case class SpringConnection(index1: Int, index2: Int, springForce: Int, _firstPo
 
   val restLength = distanceVector3(_firstPos1, _firstPos2)
   val springConstants = springForce
+  val minDistance = 0.1 * restLength
 
 }
 
@@ -137,7 +138,6 @@ trait CustomBox {
 
 
 
-
     }
 
     def addSpingForces() = {
@@ -160,7 +160,8 @@ trait CustomBox {
          val prevDistance = distanceVector3(vertex1.prevPosition, vertex2.prevPosition)
          val currDistance = distanceVector3(vertex1.pos, vertex2.pos)
 
-         if(currDistance!=0) {
+
+         if(currDistance!=0 && currDistance > spr.minDistance) {
            val yVelocity = (currDistance - prevDistance) / DeltaT.deltaT
            val force = (currDistance - spr.restLength) * spr.springConstants + (vx_12 * (vertex1.pos.x - vertex2.pos.x) + vy_12 * (vertex1.pos.y - vertex2.pos.y) + vz_12 * (vertex1.pos.z - vertex2.pos.z)) * dampingCoefficient / currDistance
 
@@ -171,6 +172,8 @@ trait CustomBox {
            physicVertex(spr.index1).addForce(new Vector3(fx, fy, fz))
            physicVertex(spr.index2).addForce(new Vector3(-fx, -fy, -fz))
          }
+
+
 
        }
     }
@@ -203,11 +206,18 @@ trait CustomBox {
       val forceCorners = 1000
 
       val maxIndex = physicVertex.length-1
+      val step = wSeg+1
 
       val corner0 = 0
       val corner1 = wSeg
       val corner2 = maxIndex-wSeg
       val corner3 = maxIndex
+
+      for(index <- 0 to wSeg){
+        pushString(index, (maxIndex-wSeg)+index, forceBorders)
+        pushString(index*step, (index*step)+wSeg, forceBorders)
+
+      }
 
       //Middle
       if((wSeg+1)%2 == 1) {
@@ -265,44 +275,6 @@ trait CustomBox {
     def pushString(index1: Int, index2: Int, springForce: Int = 100) = {
       springConnections.push(SpringConnection(index1, index2, springForce, physicVertex(index1).pos, physicVertex(index2).pos))
     }
-
-    def addSpringConnections() = {
-      pushString(0, 6)
-      pushString(1, 7)
-      pushString(2, 8)
-      pushString(3, 9)
-      pushString(4, 10)
-      pushString(5, 11)
-
-      pushString(6, 12)
-      pushString(7, 13)
-      pushString(8, 14)
-      pushString(9, 15)
-      pushString(10, 16)
-      pushString(11, 17)
-
-      pushString(12, 18)
-      pushString(13, 19)
-      pushString(14, 20)
-      pushString(15, 21)
-      pushString(16, 22)
-      pushString(17, 23)
-
-      pushString(18, 24)
-      pushString(19, 25)
-      pushString(20, 26)
-      pushString(21, 27)
-      pushString(22, 28)
-      pushString(23, 29)
-
-      pushString(24, 30)
-      pushString(25, 31)
-      pushString(26, 32)
-      pushString(27, 33)
-      pushString(28, 34)
-      pushString(29, 35)
-    }
-
 
 
 

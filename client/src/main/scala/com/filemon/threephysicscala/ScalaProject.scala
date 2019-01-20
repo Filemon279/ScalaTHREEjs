@@ -53,7 +53,7 @@ object ScalaProject extends Constants with Planets with Background with CustomBo
 
     val vertexMass = 0.9
 
-    val springGeometry = new SpringGeometry(10, 10, 5, 5, vertexMass)
+    val springGeometry = new SpringGeometry(10, 10, 20, 20, vertexMass)
 
     val controls = new TrackballControls(camera, renderer.domElement)
     val gui = new GUI(js.Dynamic.literal(resizable= false, width=300))
