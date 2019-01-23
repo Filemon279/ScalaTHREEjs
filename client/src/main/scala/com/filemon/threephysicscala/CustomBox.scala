@@ -26,7 +26,7 @@ trait CustomBox {
    // val material = new MeshBasicMaterial(js.Dynamic.literal(map=texture, depthTest=0, side=BackSide, transparent=true, blending=AdditiveBlending ))
 
 
-    val material = new MeshPhongMaterial( js.Dynamic.literal(map=texture, wireframe= false, side = DoubleSide, flatShading = true) );
+    val material = new MeshPhongMaterial( js.Dynamic.literal(map=texture, wireframe= true, side = DoubleSide, flatShading = true) );
 
     val initialSpherePosition = 10
 
